@@ -12,6 +12,7 @@ import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class StudentBatchConfiguration {
 	}
 	private Step step() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
 		return stepFactory.get("STUDENT_STEP")
-				   .<Student,Student>chunk(10)
+				   .<Student,Student>chunk(2)
 				   .reader(read())
 				   .processor(processor())
 				   .writer(writer())
@@ -56,12 +57,14 @@ public class StudentBatchConfiguration {
 		FlatFileItemReader<Student> reader = new FlatFileItemReader<>();
 		DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
 		DefaultLineMapper<Student> lineMapper = new DefaultLineMapper<>();
-
-		reader.setResource(resource);
-
-		String [] tokens = new String []{"ID", "NAME", "CITY", "STATE", "COUNTRY","PIN","YEAR"};
-		tokenizer.setNames(tokens);
 		
+		reader.setResource(resource);
+		reader.setLinesToSkip(1);
+ 
+		String [] tokens = new String []{"NAME", "CITY", "STATE", "COUNTRY","PIN","YEAR"};
+		tokenizer.setDelimiter(",");
+		tokenizer.setStrict(false);
+		tokenizer.setNames(tokens);
 		lineMapper.setLineTokenizer(tokenizer);
 		lineMapper.setFieldSetMapper(new RecordFieldSetMapper());
 		reader.setLineMapper(lineMapper);

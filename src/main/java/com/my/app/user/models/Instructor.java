@@ -1,8 +1,19 @@
 package com.my.app.user.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Instructor{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int instructor_id;
+	@Column(name="NAME")
 	private String name;
+	@Column(name="COURSE")
 	private String course;
 	
 	public Instructor(int instructor_id, String name, String course) {

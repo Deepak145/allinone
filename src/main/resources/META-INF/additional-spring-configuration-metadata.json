@@ -1,5 +1,17 @@
-{"properties": [{
-  "name": "student.csv",
-  "type": "java.lang.String",
-  "description": "A description for 'student.csv'"
-}]}
+{"properties": [
+  {
+    "name": "student.csv",
+    "type": "java.lang.String",
+    "description": "A description for 'student.csv'"
+  },
+  {
+    "name": "driverClassName",
+    "type": "java.lang.String",
+    "description": "A description for 'driverClassName'"
+  },
+  {
+    "name": "username",
+    "type": "java.lang.String",
+    "description": "A description for 'username'"
+  }
+]}

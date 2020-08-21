@@ -1,11 +1,32 @@
 package com.my.app.user.models;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Address {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer address_id;
+	@Column(name="CITY")
 	private String city;
+	@Column(name="STATE")
 	private String state;
+	@Column(name="COUNTRY")
 	private String country;
+	@Column(name="PIN")
 	private long pin;
+	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="student_id", referencedColumnName = "id")
+	private Student student;
 	
 	public Integer getAddress_id() {
 		return address_id;
